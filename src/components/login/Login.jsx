@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { loginUser } from "../../services/userService";
+import { useEffect } from "react";
+// import { useGlobalContext } from "../../context/AppContext";
+import { AppContext } from "../../context/AppContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = ()=>{
-
     const [credentials, setCredentials] = useState({
         email:'',
         password:''
     })
+
+    const [errorMessage, setErrorMessage] = useState()
+    const {setAuthToken, authToken} = useContext(AppContext);
 
     const handleChange = (event) =>{
         const { value } = event.target;
@@ -18,11 +26,13 @@ const Login = ()=>{
 
     const submitHandler = (e)=>{
         e.preventDefault();
-        console.log(credentials)
-        loginUser(credentials)
-        // signInWithEmailAndPassword(credentials.email, credentials.password)
-
+        loginUser(credentials).then(data=>data?setAuthToken(data.data.access_token):setErrorMessage("Login data incorrect"))
     }
+
+    const navigate = useNavigate();
+    useEffect(()=>{
+      if(authToken) navigate('/products/1')
+    },[authToken])
 
     return (
         <div className="container">
@@ -41,6 +51,7 @@ const Login = ()=>{
           <div className="card-footer text-muted">
             <button type="submit" className="btn btn-secondary">LOGIN</button>
             <br />
+            {errorMessage? <h5 className="text-left text-danger">{errorMessage}</h5>:<></>}
             <div><a href="">Register here</a></div>
           </div>
           

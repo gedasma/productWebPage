@@ -1,33 +1,47 @@
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { checkLoginStatus, logoutUser } from "../../services/userService"
+import { AppContext } from "../../context/AppContext"
+import { useContext } from "react"
 
 const User = ()=>{
     const [userData, setUserData] = useState()
     const navigate = useNavigate();
+    const {authToken, removeAuthToken} = useContext(AppContext);
 
-    // useEffect(()=>{
-    //     if(loading) return;
-    //     if (!user) navigate("/");
-    //     UserServices.getUserData(user,setUserData)
-    // }, [user,loading,userData])
+
+    useEffect(()=>{
+        if(authToken)
+        {
+            checkLoginStatus(authToken).then(data => setUserData(data.data))
+            // console.log(userData)
+        }
+    }, [authToken])
+
+    const handleLogout = () =>{
+        logoutUser(authToken)
+        removeAuthToken()
+        setUserData('')
+    }
 
     return(
         <>
         {
         userData?
             <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Tomas
+                <a className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {userData.name}
                 </a>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">My Products</a></li>
+                  <li><Link className="dropdown-item" to="#">My Products</Link></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="#">Log out</a></li>
+                  <li><button className="dropdown-item" onClick={handleLogout}>Log out</button></li>
                 </ul>
             </li>
         :
             <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/login">Login</a>
+                <Link className="nav-link active" aria-current="page" to="/login">Login</Link>
             </li>
         }
         </>

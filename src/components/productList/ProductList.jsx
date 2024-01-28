@@ -2,8 +2,13 @@ import ProductListItem from "../productListItem/ProductListItem"
 import { getProductPage } from "../../services/productService"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+// import { useGlobalContext } from "../../context/AppContext"
+
+
 
 const ProductList = ()=>{
+
+    
 
     let {id} = useParams()
 
@@ -25,9 +30,13 @@ const ProductList = ()=>{
             }
         }
     }, [pageData])
+
+    
+
     
     return (
     <section className="py-5">
+        
     <div className="container px-4 px-lg-5 mt-5">
         <div className="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             {pageData? 
