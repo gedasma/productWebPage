@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const ProductListItem = (props)=>{
 return (
 
@@ -11,7 +13,7 @@ return (
                         </div>
                     </div>
                     <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                        <div className="text-center"><Link className="btn btn-outline-dark mt-auto" to={`/product/${props.productData.id}`}>View options</Link></div>
                     </div>
                 </div>
             </div>

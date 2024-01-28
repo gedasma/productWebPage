@@ -25,3 +25,27 @@ export async function getProductPage(pageNumber) {
       throw new Error(`Error during fetch: ${error.message}`);
     }
   }
+
+export async function getProduct(authToken, productId) {
+  try {
+    const response = await fetch(`https://demo-api.ideabridge.lt/api/products/${productId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Data:', data);
+      return data;
+    } else {
+      console.error('Error:', response.status, response.statusText);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error:', error.message);
+    return null;
+  }
+}
