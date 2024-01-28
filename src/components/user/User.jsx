@@ -34,7 +34,7 @@ const User = ()=>{
                   {userData.name}
                 </a>
                 <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" to="#">My Products</Link></li>
+                  <li><Link className="dropdown-item" to="/userproducts/1">My Products</Link></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><button className="dropdown-item" onClick={handleLogout}>Log out</button></li>
                 </ul>

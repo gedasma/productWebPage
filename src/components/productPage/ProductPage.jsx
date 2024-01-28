@@ -1,6 +1,6 @@
 import { AppContext } from "../../context/AppContext"
 import { useContext,useState,useEffect } from "react"
-import { getProduct } from "../../services/productService";
+import { getProductById } from "../../services/productService";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ProductPage() {
@@ -8,7 +8,7 @@ function ProductPage() {
     let {id} = useParams()
 
     const {authToken} = useContext(AppContext);
-    
+
     const navigate = useNavigate();
     useEffect(()=>{
         if(!authToken)
@@ -20,7 +20,7 @@ function ProductPage() {
     useEffect(()=>{
         if(!productData)
         {
-            getProduct(authToken, id).then(data=>setProductData(data))
+            getProductById(authToken, id).then(data=>setProductData(data))
         }
     }, [id])
     

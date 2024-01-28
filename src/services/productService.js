@@ -26,7 +26,7 @@ export async function getProductPage(pageNumber) {
     }
   }
 
-export async function getProduct(authToken, productId) {
+export async function getProductById(authToken, productId) {
   try {
     const response = await fetch(`https://demo-api.ideabridge.lt/api/products/${productId}`, {
       method: 'GET',
@@ -46,6 +46,101 @@ export async function getProduct(authToken, productId) {
     }
   } catch (error) {
     console.error('Error:', error.message);
+    return null;
+  }
+}
+
+export async function getUserProducts(authToken, page) {
+  try {
+    const response = await fetch(`https://demo-api.ideabridge.lt/api/products?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } else {
+      console.error('Error:', response.status, response.statusText);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error:', error.message);
+    return null;
+  }
+}
+
+export async function uploadProduct(authToken, product) {
+  try {
+    const response = await fetch('https://demo-api.ideabridge.lt/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log(responseData)
+    return (responseData);
+  } catch (error) {
+    console.error('Error making POST request:', error.message);
+    return null;
+  }
+}
+
+export async function updateProduct(authToken, updatedProduct, productId) {
+  try {
+    const response = await fetch(`https://demo-api.ideabridge.lt/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify(updatedProduct),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log(responseData)
+    return (responseData);
+  } catch (error) {
+    console.error('Error making POST request:', error.message);
+    return null;
+  }
+}
+
+export async function deleteProduct(authToken, productId) {
+  try {
+    const response = await fetch(`https://demo-api.ideabridge.lt/api/products/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log(responseData)
+    return (responseData);
+  } catch (error) {
+    console.error('Error making POST request:', error.message);
     return null;
   }
 }
