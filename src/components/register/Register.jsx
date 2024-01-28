@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { loginUser } from "../../services/userService";
+import { registerUser } from "../../services/userService";
 import { useEffect } from "react";
 import { AppContext } from "../../context/AppContext";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const Login = ()=>{
-    const [credentials, setCredentials] = useState({
+const Register = ()=>{
+    const [regData, setRegData] = useState({
+        name:'',
         email:'',
-        password:''
+        password:'',
+        password_confirmation:''
     })
 
     const [errorMessage, setErrorMessage] = useState()
@@ -17,15 +19,15 @@ const Login = ()=>{
 
     const handleChange = (event) =>{
         const { value } = event.target;
-        setCredentials({
-            ...credentials,
+        setRegData({
+            ...regData,
             [event.target.name]:value
         })
     }
 
     const submitHandler = (e)=>{
         e.preventDefault();
-        loginUser(credentials).then(data=>data?setAuthToken(data.data.access_token):setErrorMessage("Login data incorrect"))
+        registerUser(regData).then(data=>data.status?setAuthToken(data.data.access_token):setErrorMessage(data.errors))
     }
 
     const navigate = useNavigate();
@@ -43,15 +45,19 @@ const Login = ()=>{
             LOGIN
           </div>
           <div className="card-body">
+          <input onChange={handleChange} type="text" id="name" name="name" className="form-control input-sm chat-input" placeholder="User name" />
+            <br />
             <input onChange={handleChange} type="text" id="email" name="email" className="form-control input-sm chat-input" placeholder="Email" />
             <br />
             <input onChange={handleChange} type="password" id="password" name="password" className="form-control input-sm chat-input" placeholder="Password" />
+            <br />
+            <input onChange={handleChange} type="password" id="password_confirmation" name="password_confirmation" className="form-control input-sm chat-input" placeholder="Confirm password" />
           </div>
           <div className="card-footer text-muted">
             <button type="submit" className="btn btn-secondary">LOGIN</button>
             <br />
             {errorMessage? <h5 className="text-left text-danger">{errorMessage}</h5>:<></>}
-            <div><Link to="/register">Register here</Link></div>
+            <div><Link to="/login">Login here</Link></div>
           </div>
           
         </form>
@@ -63,4 +69,4 @@ const Login = ()=>{
 }
 
 
-export default Login
+export default Register
