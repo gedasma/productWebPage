@@ -75,14 +75,22 @@ export async function getUserProducts(authToken, page) {
 }
 
 export async function uploadProduct(authToken, product) {
+  console.log("trying to upload")
   try {
+    const formData = new FormData();
+    formData.append('title', product.title);
+    formData.append('price', product.price);
+    formData.append('image', product.image);
+    formData.append('description', product.description);
+
     const response = await fetch('https://demo-api.ideabridge.lt/api/products', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`
       },
-      body: JSON.stringify(product),
+      // body: JSON.stringify(product)
+      body: formData
     });
 
     if (!response.ok) {
@@ -100,13 +108,23 @@ export async function uploadProduct(authToken, product) {
 
 export async function updateProduct(authToken, updatedProduct, productId) {
   try {
+    const formData = new URLSearchParams();
+    formData.append('title', updatedProduct.title);
+    formData.append('price', updatedProduct.price);
+    // formData.append('image', updatedProduct.image);
+    formData.append('description', updatedProduct.description);
+    // updatedProduct.image = ''
+
+    console.log("updating with data:")
+    console.log(updatedProduct)
     const response = await fetch(`https://demo-api.ideabridge.lt/api/products/${productId}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`
       },
-      body: JSON.stringify(updatedProduct),
+      // body: JSON.stringify(updatedProduct)
+      body: formData
     });
 
     if (!response.ok) {

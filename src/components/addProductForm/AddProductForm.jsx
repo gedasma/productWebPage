@@ -18,7 +18,8 @@ const AddProductForm = ({ show, handleClose, authToken, productIdToUpdate, reque
         if (event.target.name === 'image') {
             setFormProductData({
                 ...formProductData,
-                [event.target.name]: event.target.files[0], // Use event.target.files for file inputs
+                [event.target.name]: event.target.files[0]//.name, // Use event.target.files for file inputs
+                //"files": event.target.files[0]
             });
         }
         else{
@@ -56,9 +57,12 @@ const AddProductForm = ({ show, handleClose, authToken, productIdToUpdate, reque
     const submitHandler = (e) => {
         e.preventDefault();
         if(productIdToUpdate){
+            
             updateProduct(authToken, formProductData,productIdToUpdate).then(requestUpdate())
         }
         else{
+            console.log("trying to upload with this body:")
+            console.log(formProductData)
             uploadProduct(authToken, formProductData).then(requestUpdate())
         }
         

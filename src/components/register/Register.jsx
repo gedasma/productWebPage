@@ -57,7 +57,7 @@ const Register = ()=>{
             <button type="submit" className="btn btn-secondary">LOGIN</button>
             <br />
             {errorMessage? <h5 className="text-left text-danger">{errorMessage}</h5>:<></>}
-            <div><Link to="/login">Login here</Link></div>
+            <div><Link to="/login">Register</Link></div>
           </div>
           
         </form>

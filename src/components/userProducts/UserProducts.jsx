@@ -80,13 +80,13 @@ return (
         <tr key={productData.id}>
           <td>{productData.id}</td>
           <td>{productData.title}</td>
-          <td className>{truncateText(productData.description, 10)}</td>
-          <td>{productData.price}</td>
-          <button onClick={() => {handleUpdateProduct(productData.id)}}>Update</button>     
-          <button onClick={() => {handleDeleteProduct(productData.id)}}>Delete</button>     
+          <td>{truncateText(productData.description, 10)}</td>
+          <td>{productData.price} &euro;</td>
+          <td><button onClick={() => {handleUpdateProduct(productData.id)}}>Update</button></td>
+          <td><button onClick={() => {handleDeleteProduct(productData.id)}}>Delete</button></td>
         </tr>)
         :
-        <div>Loading...</div>
+        <tr><td><div>Loading...</div></td></tr>
       }
     </tbody>
   </table>
