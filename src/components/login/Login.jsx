@@ -12,7 +12,7 @@ const Login = ()=>{
         password:''
     })
 
-    const [errorMessage, setErrorMessage] = useState()
+    const [errorMessages, setErrorMessages] = useState()
     const {setAuthToken, authToken} = useContext(AppContext);
 
     const handleChange = (event) =>{
@@ -25,9 +25,9 @@ const Login = ()=>{
 
     const submitHandler = (e)=>{
         e.preventDefault();
-        loginUser(credentials).then(data=>data?setAuthToken(data.data.access_token):setErrorMessage("Login data incorrect"))
+        loginUser(credentials).then(data=>data.status?setAuthToken(data.data.access_token):setErrorMessages({"message": data.message , "errors": data.errors}))
     }
-
+    
     const navigate = useNavigate();
     useEffect(()=>{
       if(authToken) navigate('/products/1')
@@ -50,7 +50,15 @@ const Login = ()=>{
           <div className="card-footer text-muted">
             <button type="submit" className="btn btn-secondary">LOGIN</button>
             <br />
-            {errorMessage? <h5 className="text-left text-danger">{errorMessage}</h5>:<></>}
+            <div className="mt-2">
+            {errorMessages? //if have errors then map, if have no error only message, show message, else show nothing
+              errorMessages.errors?
+                Object.entries(errorMessages.errors).map(([field, errorMessage]) =>(
+                  <p key={field} className="text-start text-danger">{errorMessage}</p>
+                ))
+                : <p className="text-start text-danger">{errorMessages.message}</p>     
+              :<></>} 
+            </div>
             <div><Link to="/register">Register here</Link></div>
           </div>
           

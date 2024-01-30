@@ -30,7 +30,7 @@ function ProductPage() {
     }
   
     return (
-        <section className="py-5">
+        <section>
         <div className="container px-4 px-lg-5 my-5">
             {productData?
             <div className="row gx-4 gx-lg-5 align-items-center">
@@ -49,7 +49,6 @@ function ProductPage() {
             :
             <div>Loading...</div>
             }
-            
         </div>
     </section>
     );

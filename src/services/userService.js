@@ -34,12 +34,11 @@ export async function loginUser(loginCredentials) {
       body: JSON.stringify(loginCredentials),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! Status: ${response.status}`);
+    // }
 
     const responseData = await response.json();
-    console.log(responseData)
     return (responseData);
   } catch (error) {
     console.error('Error making POST request:', error.message);
@@ -97,7 +96,7 @@ export async function logoutUser(authToken) {
 }
 
 export async function registerUser(regData) {
-  console.log("login attempt")
+  console.log("register attempt")
   try {
     const response = await fetch('https://demo-api.ideabridge.lt/api/auth/register', {
       method: 'POST',
@@ -107,12 +106,11 @@ export async function registerUser(regData) {
       body: JSON.stringify(regData),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! Status: ${response.status}`);
+    // }
 
     const responseData = await response.json();
-    console.log(responseData)
     return (responseData);
   } catch (error) {
     console.error('Error making POST request:', error.message);

@@ -14,7 +14,7 @@ const Register = ()=>{
         password_confirmation:''
     })
 
-    const [errorMessage, setErrorMessage] = useState()
+    const [errorMessages, setErrorMessages] = useState()
     const {setAuthToken, authToken} = useContext(AppContext);
 
     const handleChange = (event) =>{
@@ -26,8 +26,8 @@ const Register = ()=>{
     }
 
     const submitHandler = (e)=>{
-        e.preventDefault();
-        registerUser(regData).then(data=>data.status?setAuthToken(data.data.access_token):setErrorMessage(data.errors))
+      e.preventDefault();
+      registerUser(regData).then(data=>data.status?setAuthToken(data.data.access_token):setErrorMessages(data.errors))
     }
 
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Register = ()=>{
         <div className="col-md-4 offset-md-4">
         <form onSubmit={submitHandler} className="card text-center card  bg-default mb-3">
           <div className="card-header">
-            LOGIN
+            Register new user
           </div>
           <div className="card-body">
           <input onChange={handleChange} type="text" id="name" name="name" className="form-control input-sm chat-input" placeholder="User name" />
@@ -54,10 +54,16 @@ const Register = ()=>{
             <input onChange={handleChange} type="password" id="password_confirmation" name="password_confirmation" className="form-control input-sm chat-input" placeholder="Confirm password" />
           </div>
           <div className="card-footer text-muted">
-            <button type="submit" className="btn btn-secondary">LOGIN</button>
+            <button type="submit" className="btn btn-secondary">Register</button>
             <br />
-            {errorMessage? <h5 className="text-left text-danger">{errorMessage}</h5>:<></>}
-            <div><Link to="/login">Register</Link></div>
+            <div className="mt-2">
+            {errorMessages?
+              Object.entries(errorMessages).map(([field, message]) =>(
+                <p key={field} className="text-start text-danger">{message}</p>
+              ))         
+              :<></>}
+            </div>
+            <div><Link to="/login">Login here</Link></div>
           </div>
           
         </form>
