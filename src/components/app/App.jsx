@@ -10,7 +10,7 @@ import Register from "../register/Register";
 function App() {
   
   return (
-    <Router>
+    <Router basename="productWebPage">
       <div className="App">
         <Header/>
         <Routes>
